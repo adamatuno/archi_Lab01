@@ -14,7 +14,8 @@ int nof(long long a){ ///not overflow
 }
 
 void Rti(unsigned int func, unsigned int s, unsigned int t, unsigned int d, unsigned int C){
-    long long temp;
+    long long t1, t2, temp;
+    int sign, n;
     switch(func){
     case 0x20:///add
         temp = itl(r[s]) + itl(r[t]);
@@ -53,19 +54,32 @@ void Rti(unsigned int func, unsigned int s, unsigned int t, unsigned int d, unsi
     case 0x02://srl
         r[d] = r[t] >> C;
         break;
-    case 0x03:///sra
+    case 0x03://sra
+        n = C;
+        sign = (r[t] > 0) ? 0x00000000 : 0x10000000;
+        while(n--) r[d] = (r[t] >> 1) | sign;
     case 0x08://jr
         PC = r[s];
         break;
-    case 0x18://mult
-    case 0x19://multu
+    case 0x18:///mult
+        t1 = r[s];
+        t2 = r[t];
+        Hi = t1 * t2 >> 32;
+        Lo = t1 * t2 & 0x00000000ffffffff;
+        break;
+    case 0x19:///multu
+        t1 = r[s];
+        t2 = r[t];
+        Hi = t1 * t2 >> 32;
+        Lo = t1 * t2 & 0x00000000ffffffff;
+        break;
     case 0x10://mfhi
-        r[d] = HI;
+        r[d] = Hi;
         break;
     case 0x12://mflo
-        r[d] = LO;
+        r[d] = Lo;
         break;
-    default: //wrong
+    default: ///wrong
     break;
     }
 
