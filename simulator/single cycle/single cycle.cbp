@@ -31,9 +31,19 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="R_type_instruction.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="decoder.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="instructions.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="simulator.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

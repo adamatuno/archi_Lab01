@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include "simulator.h"
 
-
 unsigned int getNthIns(int n, FILE *f) {
     fpos_t pos = n*4;
     unsigned int a;
@@ -18,9 +17,27 @@ void init() {
 }
 
 int main(){
-    FILE* f1 = fopen ("iimage.bin", "r");
-    FILE* f2 = fopen ("dimage.bin", "r");
+    FILE* f1 = fopen("iimage.bin", "r");
+    FILE* f2 = fopen("dimage.bin", "r");
+    unsigned int code;
     init();
-    printf("%c %d", I[3], r[4]);
+    code = getNthIns(2, f1);
+    switch(type(get_op(code))){
+        R: break;
+        J: break;
+        S: break;
+        default: break;
+    }
+    //test
+    int a, b, qq;
+    unsigned int t1, t2, c, t;
+    a = -1;
+    t = 4294967295;
+    t1 = a;
+    t2 = b;
+    c = t1 + t2;
+    qq = a == t;
+    printf("%u, %d", qq, qq);
+    //test
 return 0;
 }
