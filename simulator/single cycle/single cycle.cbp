@@ -31,6 +31,12 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="I_type_instruction.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="J_S_type_insturction.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="R_type_instruction.c">
 			<Option compilerVar="CC" />
 		</Unit>
