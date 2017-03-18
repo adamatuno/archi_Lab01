@@ -13,6 +13,7 @@ unsigned int readfile(int rst, FILE *f) {
 
 void init() {
     int i;
+    unsigned word;
     halt = 0;
     ii = fopen("iimage.bin", "r");
     di = fopen("dimage.bin", "r");
@@ -29,10 +30,14 @@ void init() {
     }
     sp = readfile(1, di);
     din = readfile(0, di);
-    for(i = 0; i < 1024; ++i) {
-        if(i < din) D[i] = readfile(0, di);
-        else D[i] = 0x00000000;
+    for(i = 0; i < din * 4; i += 4) {
+        word = readfile(0, di);
+        D[i] = word >> 24;
+        D[i + 1] = (word >> 16) & 0x000000ff;
+        D[i + 2] = (word >> 8) & 0x000000ff;
+        D[i + 3] = word & 0x000000ff;
     }
+    for(i = din * 4; i < 1024; ++i) D[i] = 0x00000000;
     for(i = 0; i < 32; ++i) r[i] = rl[i] = 0x00000000;
     Hi = Hil = 0x00000000;
     Lo = Lol = 0x00000000;
