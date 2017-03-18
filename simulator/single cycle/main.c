@@ -3,7 +3,6 @@
 #include "simulator.h"
 
 unsigned int readfile(int rst, FILE *f) {
-    fpos_t pos;
     if(rst) pos = 0;
     unsigned int a;
     fsetpos(f, &pos);
@@ -21,27 +20,32 @@ void init() {
     err = fopen("err.rpt", "w");
 
     err_overwrite_HiLo = 0;
-    PC = readfile(1, ii) / 4;
+    PCin = PC = readfile(1, ii) / 4;
     PCl = PC;
     iin = readfile(0, ii);
-    for(i = 0; i < iin; ++i) I[i] = readfile(0, ii);
-
+    for(i = 0; i < 1024; ++i) {
+        if(i < iin) I[i] = readfile(0, ii);
+        else I[i] = 0x00000000;
+    }
     sp = readfile(1, di);
     din = readfile(0, di);
     for(i = 0; i < 1024; ++i) {
         if(i < din) D[i] = readfile(0, di);
-        else D[i] =0x00000000;
+        else D[i] = 0x00000000;
     }
     for(i = 0; i < 32; ++i) r[i] = rl[i] = 0x00000000;
-    Hi = 0x00000000;
-    Lo = 0x00000000;
+    Hi = Hil = 0x00000000;
+    Lo = Lol = 0x00000000;
 }
 
 int main(){
     unsigned int code;
-    Cycle = 0;
+    Cycle = 1;
     init();
+    cycle_0();
     while(!halt && Cycle < 500000) {
+    code = I[PC - PCin];
+    PC++;
     switch(type(get_op(code))) {
         case 'R':
             Rti(get_func(code), get_rs(code), get_rt(code), get_rd(code), get_sha(code));
@@ -54,7 +58,6 @@ int main(){
             break;
     }
     if(!halt) snap(Cycle);
-    PC++;
     Cycle++;
     }
 return 0;

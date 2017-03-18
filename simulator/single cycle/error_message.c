@@ -2,12 +2,10 @@
 #include <stdlib.h>
 #include "simulator.h"
 
-int write_0(unsigned int r){
+void write_0(unsigned int r){
     if(r == 0){
         fprintf(err, "In cycle %d: Write $0 Error\n", Cycle);
-        return 1;
     }
-    else return 0;
 }
 
 long long itl(int a){
@@ -25,8 +23,8 @@ void number_overflow(int a, int b, int c){/**c=1 add, c=0 multi **/
 
 void overwrite_HiLo(int rst){
     if(rst) err_overwrite_HiLo = 0;
-    if(err_overwrite_HiLo) fprintf(err, "In cycle %d: Overwrite HI-LO register\n", Cycle);
-    err_overwrite_HiLo = 1;
+    if(err_overwrite_HiLo) fprintf(err, "In cycle %d: Overwrite HI-LO registers\n", Cycle);
+    if(!rst) err_overwrite_HiLo = 1;
 }
 
 void mem_overflow(int addr, int range){
