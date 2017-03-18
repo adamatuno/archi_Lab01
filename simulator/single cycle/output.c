@@ -4,7 +4,7 @@
 void cycle_0() {
     int i;
     fprintf(sn, "cycle 0\n");
-    for(i = 0; i < 32; ++i) fprintf(sn, "$%02d: 0x00000000\n", i);
+    for(i = 0; i < 32; ++i) fprintf(sn, "$%02d: 0x%08X\n", i, r[i]);
     fprintf(sn, "$HI: 0x00000000\n$LO: 0x00000000\nPC: 0x%08X\n\n\n", PC * 4);
 }
 

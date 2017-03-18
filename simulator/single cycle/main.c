@@ -28,7 +28,7 @@ void init() {
         if(i < iin) I[i] = readfile(0, ii);
         else I[i] = 0x00000000;
     }
-    sp = readfile(1, di);
+    r[29] = rl[29] = readfile(1, di);
     din = readfile(0, di);
     for(i = 0; i < din * 4; i += 4) {
         word = readfile(0, di);
@@ -38,7 +38,7 @@ void init() {
         D[i + 3] = word & 0x000000ff;
     }
     for(i = din * 4; i < 1024; ++i) D[i] = 0x00000000;
-    for(i = 0; i < 32; ++i) r[i] = rl[i] = 0x00000000;
+    for(i = 0; i < 32; ++i) if(i != 29) r[i] = rl[i] = 0x00000000;
     Hi = Hil = 0x00000000;
     Lo = Lol = 0x00000000;
 }
