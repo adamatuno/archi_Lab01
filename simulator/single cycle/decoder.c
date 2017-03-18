@@ -38,8 +38,8 @@ char type(unsigned int op){
     switch(op) {
     case 0x00: return 'R';
     case 0x02:
-    case 0x03: return 'J';
-    case 0x3f: return 'S';
+    case 0x03:
+    case 0x3f: return 'J';
     default: return 'I';
     }
 }

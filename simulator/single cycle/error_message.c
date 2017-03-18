@@ -4,7 +4,7 @@
 
 int write_0(unsigned int r){
     if(r == 0){
-        fprintf(di, "In cycle %d: Write $0 Error\n", Cycle);
+        fprintf(err, "In cycle %d: Write $0 Error\n", Cycle);
         return 1;
     }
     else return 0;
@@ -15,10 +15,34 @@ long long itl(int a){
     return b;
 }
 
-void Number_overflow(int a, int b, int c){/**c=1 add, c=0 multi **/
+void number_overflow(int a, int b, int c){/**c=1 add, c=0 multi **/
     long long A = a, B = b;
     if(c && ((a > 0 && b > 0 && a + b < 0) || (a < 0 && b < 0 && a + b > 0)))
-    fprintf(di, "In cycle %d: Number Overflow\n", Cycle);
-    if(!c && ((a * b < 0 && A * B > 0) || (a * b > 0 && A * B < 0)))
-    fprintf(di, "In cycle %d: Number Overflow\n", Cycle);
+    fprintf(err, "In cycle %d: Number Overflow\n", Cycle);
+    if(!c && ((((a > 0 && b < 0) || (a < 0 && b > 0)) && A * B > 0) || (a < 0 && b < 0 && A * B < 0)))
+    fprintf(err, "In cycle %d: Number Overflow\n", Cycle);
+}
+
+void overwrite_HiLo(int rst){
+    if(rst) err_overwrite_HiLo = 0;
+    if(err_overwrite_HiLo) fprintf(err, "In cycle %d: Overwrite HI-LO register\n", Cycle);
+    err_overwrite_HiLo = 1;
+}
+
+void mem_overflow(int addr, int range){
+    if(addr < 0 || addr + range > 1023){
+        fprintf(err, "In cycle %d: Address Overflow\n", Cycle);
+        halt = 1;
+    }
+}
+
+void data_misaligned(int C, int type) { /**type=1 word, type=0 half**/
+    if(type && C%4 != 0) {
+        fprintf(err, "In cycle %d: Misalignment Error\n", Cycle);
+        halt = 1;
+    }
+    if(!type && C%2 != 0) {
+        fprintf(err, "In cycle %d: Misalignment Error\n", Cycle);
+        halt = 1;
+    }
 }

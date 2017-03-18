@@ -17,10 +17,12 @@ void init() {
     halt = 0;
     ii = fopen("iimage.bin", "r");
     di = fopen("dimage.bin", "r");
-    sn = fopen("snaptshot.rpt", "w");
-    err = fopen("error_dump.rpt", "w");
+    sn = fopen("sn.rpt", "w");
+    err = fopen("err.rpt", "w");
 
+    err_overwrite_HiLo = 0;
     PC = readfile(1, ii) / 4;
+    PCl = PC;
     iin = readfile(0, ii);
     for(i = 0; i < iin; ++i) I[i] = readfile(0, ii);
 
@@ -30,7 +32,7 @@ void init() {
         if(i < din) D[i] = readfile(0, di);
         else D[i] =0x00000000;
     }
-    for(i = 0; i < 32; ++i) r[i] = 0x00000000;
+    for(i = 0; i < 32; ++i) r[i] = rl[i] = 0x00000000;
     Hi = 0x00000000;
     Lo = 0x00000000;
 }
@@ -39,27 +41,21 @@ int main(){
     unsigned int code;
     Cycle = 0;
     init();
-    while(!halt){
-    switch(type(get_op(code))){
-        case R:
-            Rti(getfunc(code), get_rs(code), get_rt(code), get_rd(code), get_sha(code));
+    while(!halt && Cycle < 500000) {
+    switch(type(get_op(code))) {
+        case 'R':
+            Rti(get_func(code), get_rs(code), get_rt(code), get_rd(code), get_sha(code));
             break;
-        case J:
-        case S:
+        case 'J':
             JSti(get_op(code), get_addr(code));
             break;
         default:
             Iti(get_op(code), get_rs(code), get_rt(code), get_imm(code));
             break;
     }
-    snap(Cycle);
-
+    if(!halt) snap(Cycle);
     PC++;
     Cycle++;
     }
-    //test
-    int a, b, qq, i;
-    unsigned int t1, t2, c, t;
-    //test
 return 0;
 }

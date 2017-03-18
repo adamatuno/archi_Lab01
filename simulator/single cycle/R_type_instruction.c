@@ -10,9 +10,8 @@ void Rti(unsigned int func, unsigned int s, unsigned int t, unsigned int d, unsi
     switch(func){
     case 0x20:///add
         if(write_0(d)) break;
-        temp = itl(r[s]) + itl(r[t]);
-        if(nof(temp)) r[d] = r[s] + r[t];
-        else //error
+        number_overflow(r[s], r[t], 1);
+        r[d] = r[s] + r[t];
         break;
     case 0x21:///addu
         if(write_0(d)) break;
@@ -20,9 +19,8 @@ void Rti(unsigned int func, unsigned int s, unsigned int t, unsigned int d, unsi
         break;
     case 0x22:///sub
         if(write_0(d)) break;
-        temp = itl(r[s]) - itl(r[t]);
-        if(nof(temp)) r[d] = r[s] - r[t];
-        else //error
+        number_overflow(r[s], -r[t], 1);
+        r[d] = r[s] - r[t];
         break;
     case 0x24://and
         if(write_0(d)) break;
@@ -62,15 +60,18 @@ void Rti(unsigned int func, unsigned int s, unsigned int t, unsigned int d, unsi
         while(n--) r[d] = (r[t] >> 1) | sign;
         break;
     case 0x08://jr
-        PC = r[s];
+        PC = r[s] / 4;
         break;
     case 0x18:///mult
+        number_overflow(r[s], r[t], 0);
+        overwrite_HiLo(0);
         t1 = r[s];
         t2 = r[t];
         Hi = t1 * t2 >> 32;
         Lo = t1 * t2 & 0x00000000ffffffff;
         break;
     case 0x19:///multu
+        overwrite_HiLo(0);
         t1 = r[s];
         t2 = r[t];
         Hi = t1 * t2 >> 32;
@@ -78,14 +79,16 @@ void Rti(unsigned int func, unsigned int s, unsigned int t, unsigned int d, unsi
         break;
     case 0x10://mfhi
         if(write_0(d)) break;
+        overwrite_HiLo(1);
         r[d] = Hi;
         break;
     case 0x12://mflo
         if(write_0(d)) break;
+        overwrite_HiLo(1);
         r[d] = Lo;
         break;
     default: ///wrong
-    break;
+        break;
     }
 
 }
