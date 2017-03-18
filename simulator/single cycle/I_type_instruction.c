@@ -115,18 +115,15 @@ void Iti(unsigned int op, unsigned int s, unsigned int t, int C){
         break;
     case 0x04://beq
         number_overflow(PC*4, 4*C+4, 1);
-        if(r[s] == r[t]) PC = PC + 1 + C;
-        r[0] = 0;
+        if(r[s] == r[t]) PC = PC + C;
         break;
     case 0x05://bne
         number_overflow(PC*4, 4*C+4, 1);
-        if(r[s] != r[t]) PC = PC + 1 + C;
-        r[0] = 0;
+        if(r[s] != r[t]) PC = PC + C;
         break;
     case 0x07://bgtz
         number_overflow(PC*4, 4*C+4, 1);
-        if(r[s] > 0) PC = PC + 1 + C;
-        r[0] = 0;
+        if(r[s] > 0) PC = PC + C;
         break;
     default: //wrong
         break;

@@ -42,28 +42,55 @@ PC: 0x00000204
 
 
 cycle 2
-PC: 0x00000238
+PC: 0x00000234
 
 
 cycle 3
+$05: 0x00000088
+PC: 0x00000238
+
+
+cycle 4
 $03: 0x00000080
 PC: 0x0000023C
 
 
-cycle 4
-$06: 0x00000001
+cycle 5
 PC: 0x00000240
 
 
-cycle 5
-PC: 0x00000254
-
-
 cycle 6
-PC: 0x00000274
+PC: 0x00000244
 
 
 cycle 7
+$04: 0x00000081
+PC: 0x00000248
+
+
+cycle 8
+PC: 0x0000024C
+
+
+cycle 9
+PC: 0x00000258
+
+
+cycle 10
+PC: 0x0000026C
+
+
+cycle 11
+$07: 0xFFFFFFFE
+PC: 0x00000270
+
+
+cycle 12
+PC: 0x00000274
+
+
+cycle 13
+$08: 0x0000FFFE
 PC: 0x00000278
 
 
