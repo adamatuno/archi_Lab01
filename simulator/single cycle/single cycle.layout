@@ -2,44 +2,39 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
+	<File name="decoder.c" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="11" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="652" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="output.c" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="4" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="194" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="main.c" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="7" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="736" topLine="15" />
+		</Cursor>
+	</File>
+	<File name="J_S_type_insturction.c" open="1" top="1" tabpos="8" split="0" active="1" splitpos="0" zoom_1="9" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="393" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="R_type_instruction.c" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="7" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2206" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="simulator.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="8" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="13" topLine="0" />
+		</Cursor>
+	</File>
 	<File name="I_type_instruction.c" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="8" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2714" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="main.c" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="7" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1051" topLine="39" />
-		</Cursor>
-	</File>
-	<File name="J_S_type_insturction.c" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="9" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="65" topLine="1" />
-		</Cursor>
-	</File>
-	<File name="R_type_instruction.c" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="10" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2039" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="decoder.c" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="11" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="691" topLine="33" />
-		</Cursor>
-	</File>
-	<File name="simulator.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="13" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="90" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="error_message.c" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="9" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="58" topLine="6" />
-		</Cursor>
-	</File>
-	<File name="output.c" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="12" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="468" topLine="0" />
+			<Cursor1 position="392" topLine="6" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>
