@@ -2,12 +2,9 @@
 #include <stdlib.h>
 #include "simulator.h"
 
-unsigned int readfile(int rst, FILE *f) {
-    if(rst) pos = 0;
+unsigned int readfile(FILE *f) {
     unsigned int a;
-    fsetpos(f, &pos);
     fread(&a, 4, 1, f);
-    pos += 4;
     return (a&0x000000ff)<<24|(a&0x0000ff00)<<8|(a&0x00ff0000)>>8|(a&0xff000000)>>24;
 }
 
@@ -21,17 +18,17 @@ void init() {
     err = fopen("error_dump.rpt", "w");
 
     err_overwrite_HiLo = 0;
-    PCin = PC = readfile(1, ii) / 4;
+    PCin = PC = readfile(ii) / 4;
     PCl = PC;
-    iin = readfile(0, ii);
+    iin = readfile(ii);
     for(i = 0; i < 1024; ++i) {
-        if(i < iin) I[i] = readfile(0, ii);
+        if(i < iin) I[i] = readfile(ii);
         else I[i] = 0xffffffff;
     }
-    r[29] = rl[29] = readfile(1, di);
-    din = readfile(0, di);
+    r[29] = rl[29] = readfile(di);
+    din = readfile(di);
     for(i = 0; i < din * 4; i += 4) {
-        word = readfile(0, di);
+        word = readfile(di);
         D[i] = word >> 24;
         D[i + 1] = (word >> 16) & 0x000000ff;
         D[i + 2] = (word >> 8) & 0x000000ff;
