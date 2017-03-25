@@ -10,7 +10,7 @@ unsigned int readfile(FILE *f) {
 
 void init() {
     int i;
-    unsigned word;
+    unsigned int word;
     halt = 0;
     ii = fopen("iimage.bin", "r");
     di = fopen("dimage.bin", "r");
@@ -59,8 +59,7 @@ int main(){
             Iti(get_op(code), get_rs(code), get_rt(code), get_imm(code));
             break;
     }
-    if(!halt) snap(Cycle);
-    Cycle++;
+    if(!halt) snap(Cycle);Cycle++;
     }
 return 0;
 }

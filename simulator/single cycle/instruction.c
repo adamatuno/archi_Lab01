@@ -207,7 +207,7 @@ void Iti(unsigned int op, unsigned int s, unsigned int t, int C){
         mem_overflow(r[s] + C, 3);
         data_misaligned(r[s] + C, 1);
         if(mem_out(r[s] + C, 1)) break;
-        D[r[s] + C] = r[t] >> 24;
+        D[r[s] + C] = (r[t] >> 24) & 0x000000ff;
         D[r[s] + C + 1] = (r[t] >> 16) & 0x000000ff;
         D[r[s] + C + 2] = (r[t] >> 8) & 0x000000ff;
         D[r[s] + C + 3] = r[t] & 0x000000ff;
