@@ -17,8 +17,8 @@ void init() {
     halt = 0;
     ii = fopen("iimage.bin", "r");
     di = fopen("dimage.bin", "r");
-    sn = fopen("sn.rpt", "w");
-    err = fopen("err.rpt", "w");
+    sn = fopen("snapshot.rpt", "w");
+    err = fopen("error_dump.rpt", "w");
 
     err_overwrite_HiLo = 0;
     PCin = PC = readfile(1, ii) / 4;
@@ -26,7 +26,7 @@ void init() {
     iin = readfile(0, ii);
     for(i = 0; i < 1024; ++i) {
         if(i < iin) I[i] = readfile(0, ii);
-        else I[i] = 0x00000000;
+        else I[i] = 0xffffffff;
     }
     r[29] = rl[29] = readfile(1, di);
     din = readfile(0, di);
@@ -48,7 +48,7 @@ int main(){
     Cycle = 1;
     init();
     cycle_0();
-    while(!halt && Cycle < 500000) {
+    while(!halt && Cycle <= 500000) {
     code = I[PC - PCin];
     PC++;
     switch(type(get_op(code))) {

@@ -31,22 +31,19 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="I_type_instruction.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="J_S_type_insturction.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="R_type_instruction.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="decoder.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="instructions.c">
+		<Unit filename="error_message.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="instruction.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="output.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="simulator.h" />
