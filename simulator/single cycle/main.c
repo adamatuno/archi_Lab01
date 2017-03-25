@@ -21,11 +21,11 @@ void init() {
     PCin = PC = readfile(ii) / 4;
     PCl = PC;
     iin = readfile(ii);
-    for(i = 0; i < 1024; ++i) {
-        if(i < iin) I[i] = readfile(ii);
-        else I[i] = 0xffffffff;
+    for(i = 0; i < 256; ++i) {
+        if(i < PCin + iin && i >= PCin) I[i] = readfile(ii);
+        else I[i] = 0x00000000;
     }
-    r[29] = rl[29] = readfile(di);
+    r[29] = rl[29] = spin = readfile(di);
     din = readfile(di);
     for(i = 0; i < din * 4; i += 4) {
         word = readfile(di);
@@ -46,9 +46,9 @@ int main(){
     init();
     cycle_0();
     while(!halt && Cycle <= 500000) {
-    code = I[PC - PCin];
+    code = I[PC];
     PC++;
-    switch(type(get_op(code))) {
+    if(code != 0x00000000) switch(type(get_op(code))) {
         case 'R':
             Rti(get_func(code), get_rs(code), get_rt(code), get_rd(code), get_sha(code));
             break;
@@ -59,6 +59,7 @@ int main(){
             Iti(get_op(code), get_rs(code), get_rt(code), get_imm(code));
             break;
     }
+    if(Cycle == 869) printf("14: 0x%08x\n12: 0x%08x\n0x%08",r[14], r[12]);
     if(!halt) snap(Cycle);
     Cycle++;
     }

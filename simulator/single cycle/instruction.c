@@ -1,19 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "simulator.h"
-void JSti(unsigned int op, unsigned C){
+void JSti(unsigned int op, unsigned int C){
     switch(op){
     case 0x02://j
-        PC = ((PC << 2) & 0x000000f) | C;
+        PC = (((PC << 2) & 0xf0000000) | (C << 2)) >> 2;
         break;
     case 0x03://jal
         r[31] = PC << 2;
-        PC = (( PC << 2) & 0x000000f) | C;
+        PC = (((PC << 2) & 0xf0000000) | (C << 2)) >> 2;
         break;
     case 0x3f://halt
         halt = 1;
         break;
     default:
+        halt = 1;
+        printf("illegal instruction found at 0x%08x",PC * 4 - 4);
         break;
     }
 }
@@ -72,6 +74,7 @@ void Rti(unsigned int func, unsigned int s, unsigned int t, unsigned int d, unsi
         r[0] = 0;
         break;
     case 0x00://sll
+        write_0(d);
         r[d] = r[t] << C;
         r[0] = 0;
         break;
@@ -89,6 +92,7 @@ void Rti(unsigned int func, unsigned int s, unsigned int t, unsigned int d, unsi
         break;
     case 0x08://jr
         PC = r[s] / 4;
+        PC_overflow();
         break;
     case 0x18:///mult
         overwrite_HiLo(0);
@@ -121,7 +125,7 @@ void Rti(unsigned int func, unsigned int s, unsigned int t, unsigned int d, unsi
         break;
     default:
         halt = 1;
-        printf("illegal instruction found at 0x%08x",PC * 4);
+        printf("illegal instruction found at 0x%08x",PC * 4 - 4);
         break;
     }
 
@@ -147,10 +151,10 @@ void Iti(unsigned int op, unsigned int s, unsigned int t, int C){
         number_overflow(r[s], C, 1);
         mem_overflow(r[s] + C, 3);
         data_misaligned(C, 1);
-        a = D[r[s] + C];
-        b = D[r[s] + C + 1];
-        c = D[r[s] + C + 2];
-        d = D[r[s] + C + 3];
+        a = D[r[s] + C] & 0x000000ff;
+        b = D[r[s] + C + 1] & 0x000000ff;
+        c = D[r[s] + C + 2] & 0x000000ff;
+        d = D[r[s] + C + 3] & 0x000000ff;
         r[t] = (a << 24) | (b << 16) | (c << 8) | d;
         r[0] = 0;
         break;
@@ -241,17 +245,22 @@ void Iti(unsigned int op, unsigned int s, unsigned int t, int C){
         break;
     case 0x04://beq
         number_overflow(PC*4, 4*C+4, 1);
+        PC_overflow();
         if(r[s] == r[t]) PC = PC + C;
         break;
     case 0x05://bne
         number_overflow(PC*4, 4*C+4, 1);
+        PC_overflow();
         if(r[s] != r[t]) PC = PC + C;
         break;
     case 0x07://bgtz
         number_overflow(PC*4, 4*C+4, 1);
+        PC_overflow();
         if(r[s] > 0) PC = PC + C;
         break;
-    default: //wrong
+    default:
+        halt = 1;
+        printf("illegal instruction found at 0x%08x",PC * 4 - 4);
         break;
     }
 }
