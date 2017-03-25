@@ -82,14 +82,14 @@ void Rti(unsigned int func, unsigned int s, unsigned int t, unsigned int d, unsi
         break;
     case 0x02://srl
         write_0(d);
-        r[d] = r[t] >> C;
+        n = C;
+        while(n--) r[t] = (r[t] >> C) & 0x7fffffff;
+        r[d] = r[t];
         r[0] = 0;
         break;
     case 0x03://sra
         write_0(d);
-        n = C;
-        sign = (r[t] > 0) ? 0x00000000 : 0x80000000;
-        while(n--) r[d] = (r[t] >> 1) | sign;
+        r[d] = r[t] >> C;
         r[0] = 0;
         break;
     case 0x08://jr
@@ -169,7 +169,8 @@ void Iti(unsigned int op, unsigned int s, unsigned int t, int C){
         if(mem_out(r[s] + C, 1)) break;
         a = D[r[s] + C];
         b = D[r[s] + C + 1];
-        r[t] = ((a << 8) | b) & 0x0000ffff;
+        if(a >> 7) r[t] = ((a << 8) | b) | 0xffff0000;
+        else r[t] = ((a << 8) | b) & 0x0000ffff;
         r[0] = 0;
         break;
     case 0x25://lhu
@@ -180,8 +181,7 @@ void Iti(unsigned int op, unsigned int s, unsigned int t, int C){
         if(mem_out(r[s] + C, 1)) break;
         a = D[r[s] + C];
         b = D[r[s] + C + 1];
-        if(b / 255) r[t] = (a << 8) | b | 0xffff0000;
-        else r[t] = ((a << 8) | b) & 0x0000ffff;
+        r[t] = ((a << 8) | b) & 0x0000ffff;
         r[0] = 0;
         break;
     case 0x20://lb
@@ -190,7 +190,7 @@ void Iti(unsigned int op, unsigned int s, unsigned int t, int C){
         mem_overflow(r[s] + C, 0);
         if(mem_out(r[s] + C, 0)) break;
         a = D[r[s] + C] & 0x000000ff;
-        if(a / 255) r[t] = a | 0xffffff00;
+        if(a >> 7) r[t] = a | 0xffffff00;
         else r[t] = a;
         r[0] = 0;
         break;
