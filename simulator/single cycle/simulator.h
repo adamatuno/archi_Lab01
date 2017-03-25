@@ -20,6 +20,7 @@ long long itl(int a);
 void number_overflow(int a, int b, int c);
 void overwrite_HiLo(int rst);
 void mem_overflow(int addr, int range);
+int mem_out(int addr, int range);
 void data_misaligned(int C, int type);
 void Rti(unsigned int func, unsigned int s, unsigned int t, unsigned int d, unsigned int C);
 void JSti(unsigned int op, unsigned C);

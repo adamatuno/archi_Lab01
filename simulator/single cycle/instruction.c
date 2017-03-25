@@ -5,10 +5,12 @@ void JSti(unsigned int op, unsigned int C){
     switch(op){
     case 0x02://j
         PC = (((PC << 2) & 0xf0000000) | (C << 2)) >> 2;
+        PC_overflow();
         break;
     case 0x03://jal
         r[31] = PC << 2;
         PC = (((PC << 2) & 0xf0000000) | (C << 2)) >> 2;
+        PC_overflow();
         break;
     case 0x3f://halt
         halt = 1;
@@ -150,7 +152,8 @@ void Iti(unsigned int op, unsigned int s, unsigned int t, int C){
         write_0(t);
         number_overflow(r[s], C, 1);
         mem_overflow(r[s] + C, 3);
-        data_misaligned(C, 1);
+        data_misaligned(r[s] + C, 1);
+        if(mem_out(r[s] + C, 3)) break;
         a = D[r[s] + C] & 0x000000ff;
         b = D[r[s] + C + 1] & 0x000000ff;
         c = D[r[s] + C + 2] & 0x000000ff;
@@ -162,7 +165,8 @@ void Iti(unsigned int op, unsigned int s, unsigned int t, int C){
         write_0(t);
         number_overflow(r[s], C, 1);
         mem_overflow(r[s] + C, 1);
-        data_misaligned(C, 0);
+        data_misaligned(r[s] + C, 0);
+        if(mem_out(r[s] + C, 1)) break;
         a = D[r[s] + C];
         b = D[r[s] + C + 1];
         r[t] = ((a << 8) | b) & 0x0000ffff;
@@ -172,6 +176,8 @@ void Iti(unsigned int op, unsigned int s, unsigned int t, int C){
         write_0(t);
         number_overflow(r[s], C, 1);
         mem_overflow(r[s] + C, 1);
+        data_misaligned(r[s] + C, 0);
+        if(mem_out(r[s] + C, 1)) break;
         a = D[r[s] + C];
         b = D[r[s] + C + 1];
         if(b / 255) r[t] = (a << 8) | b | 0xffff0000;
@@ -182,6 +188,7 @@ void Iti(unsigned int op, unsigned int s, unsigned int t, int C){
         write_0(t);
         number_overflow(r[s], C, 1);
         mem_overflow(r[s] + C, 0);
+        if(mem_out(r[s] + C, 0)) break;
         a = D[r[s] + C] & 0x000000ff;
         if(a / 255) r[t] = a | 0xffffff00;
         else r[t] = a;
@@ -191,13 +198,15 @@ void Iti(unsigned int op, unsigned int s, unsigned int t, int C){
         write_0(t);
         number_overflow(r[s], C, 1);
         mem_overflow(r[s] + C, 0);
+        if(mem_out(r[s] + C, 0)) break;
         r[t] = D[r[s] + C] & 0x000000ff;
         r[0] = 0;
         break;
     case 0x2b://sw
         number_overflow(r[s], C, 1);
         mem_overflow(r[s] + C, 3);
-        data_misaligned(C, 1);
+        data_misaligned(r[s] + C, 1);
+        if(mem_out(r[s] + C, 1)) break;
         D[r[s] + C] = r[t] >> 24;
         D[r[s] + C + 1] = (r[t] >> 16) & 0x000000ff;
         D[r[s] + C + 2] = (r[t] >> 8) & 0x000000ff;
@@ -206,13 +215,15 @@ void Iti(unsigned int op, unsigned int s, unsigned int t, int C){
     case 0x29://sh
         number_overflow(r[s], C, 1);
         mem_overflow(r[s] + C, 1);
-        data_misaligned(C, 0);
+        data_misaligned(r[s] + C, 0);
+        if(mem_out(r[s] + C, 1)) break;
         D[r[s] + C] = (r[t] >> 8) & 0x000000ff;
         D[r[s] + C + 1] = r[t] & 0x000000ff;
         break;
     case 0x28://sb
         number_overflow(r[s], C, 0);
         mem_overflow(r[s] + C, 1);
+        if(mem_out(r[s] + C, 1)) break;
         D[r[s] + C] = r[t] & 0x000000ff;
         break;
     case 0x0f:///lui

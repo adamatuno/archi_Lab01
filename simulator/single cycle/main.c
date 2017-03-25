@@ -59,7 +59,6 @@ int main(){
             Iti(get_op(code), get_rs(code), get_rt(code), get_imm(code));
             break;
     }
-    if(Cycle == 869) printf("14: 0x%08x\n12: 0x%08x\n0x%08",r[14], r[12]);
     if(!halt) snap(Cycle);
     Cycle++;
     }
