@@ -82,10 +82,7 @@ void Rti(unsigned int func, unsigned int s, unsigned int t, unsigned int d, unsi
         break;
     case 0x02://srl
         write_0(d);
-        n = C;
-        if(r[t] >= 0) r[t] >> C;
-        else while(n--) r[t] = (r[t] >> 1) & 0x7fffffff ;
-        r[d] = r[t];
+        r[d] = (unsigned int)r[t] >> C;
         r[0] = 0;
         break;
     case 0x03://sra
