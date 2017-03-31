@@ -15,7 +15,7 @@ long long itl(int a){
 
 void number_overflow(int a, int b, int c){/**c=1 add, c=0 multi **/
     long long A = a, B = b;
-    if(c && ((a > 0 && b > 0 && a + b < 0) || (a < 0 && b < 0 && a + b > 0)))
+    if(c && ((a > 0 && b > 0 && a + b <= 0) || (a < 0 && b < 0 && a + b >= 0)))
     fprintf(err, "In cycle %d: Number Overflow\n", Cycle);
     if(!c && ((((a > 0 && b < 0) || (a < 0 && b > 0)) && A * B > 0) || (a < 0 && b < 0 && A * B < 0)))
     fprintf(err, "In cycle %d: Number Overflow\n", Cycle);

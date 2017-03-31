@@ -1,5 +1,5 @@
 comp = fc
-case1 = bubble_sort
+case1 = 2
 case2 = _1
 case3 = _2
 case4 = _3
