@@ -34,7 +34,7 @@ unsigned int get_func(unsigned int i) {//6
     return i & 0x0000003f;
 }
 
-short int get_imm(unsigned int i) {//16
+int get_imm(unsigned int i) {//16
     return (i & 0x0000ffff);
 }
 
@@ -109,6 +109,7 @@ void Rti(unsigned int func, unsigned int s, unsigned int t, unsigned int d, unsi
         fprintf(iid, "mflo %d\n", d);
         break;
     default:
+        printf("err\n");
         break;
     }
 
@@ -171,6 +172,7 @@ void Iti(unsigned int op, unsigned int s, unsigned int t, int C){
         fprintf(iid, "bgtz %d, %d\n", s, C);
         break;
     default: //wrong
+        printf("err\n");
         break;
     }
 }
@@ -187,6 +189,7 @@ void JSti(unsigned int op, unsigned C){
         fprintf(iid, "halt\n");
         break;
     default:
+        printf("err\n");
         break;
     }
 }
@@ -202,8 +205,7 @@ int main() {
     iin = readfile(0, ii);
     fprintf(iid, "%08x\n", iin);
     printf("PC: %08x, num: %d",PC,iin);
-    for(i = 0; i < iin && i < 50; ++i){
-        //printf("%d",i);
+    for(i = 0; i < iin; ++i){
         code = readfile(0, ii);
         switch(type(get_op(code))) {
         case 'R':
