@@ -50,7 +50,7 @@ int main(){
     while(!halt && Cycle <= 500000) {
     code = I[PC];
     PC++;
-    if(code != 0x00000000) switch(type(get_op(code))) {
+    if((code & 0xfc0fffff) != 0x00000000) switch(type(get_op(code))) {
         case 'R':
             Rti(get_func(code), get_rs(code), get_rt(code), get_rd(code), get_sha(code));
             break;
@@ -61,7 +61,8 @@ int main(){
             Iti(get_op(code), get_rs(code), get_rt(code), get_imm(code));
             break;
     }
-    if(!halt) snap(Cycle);Cycle++;
+    if(!halt) snap(Cycle);
+    Cycle++;
     }
 return 0;
 }

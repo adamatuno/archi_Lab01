@@ -1,9 +1,9 @@
 comp = fc
-case1 = 2
-case2 = _1
-case3 = _2
-case4 = _3
-case5 = _4
+case1 = 4
+case2 = 1
+case3 = 2
+case4 = 3
+case5 = 4
 single_cycle: *.o
 	gcc *.o -o single_cycle
 *.o: *.c
