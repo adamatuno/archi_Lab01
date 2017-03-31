@@ -12,10 +12,10 @@ void init() {
     int i;
     unsigned int word;
     halt = 0;
-    ii = fopen("iimage.bin", "r");
-    di = fopen("dimage.bin", "r");
-    sn = fopen("snapshot.rpt", "w");
-    err = fopen("error_dump.rpt", "w");
+    ii = fopen("iimage.bin", "rb");
+    di = fopen("dimage.bin", "rb");
+    sn = fopen("snapshot.rpt", "wb");
+    err = fopen("error_dump.rpt", "wb");
 
     err_overwrite_HiLo = 0;
     PCin = PC = readfile(ii) / 4;
@@ -27,8 +27,9 @@ void init() {
     }
     r[29] = rl[29] = spin = readfile(di);
     din = readfile(di);
-    for(i = 0; i < din * 4; i += 4) {
+    for(i = 0; i < 900; i += 4) {
         word = readfile(di);
+        //fprintf(err,"%03d, %08x\n", i, word);
         D[i] = word >> 24;
         D[i + 1] = (word >> 16) & 0x000000ff;
         D[i + 2] = (word >> 8) & 0x000000ff;
@@ -41,6 +42,7 @@ void init() {
 }
 
 int main(){
+    int i;
     unsigned int code;
     Cycle = 1;
     init();

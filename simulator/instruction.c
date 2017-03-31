@@ -158,7 +158,6 @@ void Iti(unsigned int op, unsigned int s, unsigned int t, int C){
         d = D[r[s] + C + 3] & 0x000000ff;
         r[t] = (a << 24) | (b << 16) | (c << 8) | d;
         r[0] = 0;
-        if(Cycle == 869) fprintf(sn, "%d,%d,%d,%d, %d",a,b,c,d,r[s]);
         break;
     case 0x21://lh
         write_0(t);
