@@ -27,9 +27,8 @@ void init() {
     }
     r[29] = rl[29] = spin = readfile(di);
     din = readfile(di);
-    for(i = 0; i < 900; i += 4) {
+    for(i = 0; i < din * 4; i += 4) {
         word = readfile(di);
-        //fprintf(err,"%03d, %08x\n", i, word);
         D[i] = word >> 24;
         D[i + 1] = (word >> 16) & 0x000000ff;
         D[i + 2] = (word >> 8) & 0x000000ff;
@@ -62,7 +61,7 @@ int main(){
             break;
     }
     if(!halt) snap(Cycle);
-    Cycle++;
+    ++Cycle;
     }
 return 0;
 }

@@ -28,14 +28,14 @@ void overwrite_HiLo(int rst){
 }
 
 void mem_overflow(int addr, int range){
-    if(addr < 0 || addr + range > 1023){
+    if(addr < 0 || addr + range < 0 ||addr > 1023 || addr + range > 1023){
         fprintf(err, "In cycle %d: Address Overflow\n", Cycle);
         halt = 1;
     }
 }
 
 int mem_out(int addr, int range){
-    if(addr < 0 || addr + range > 1023){
+    if(addr < 0 || addr + range < 0 ||addr > 1023 || addr + range > 1023){
         halt = 1;
         return 1;
     }

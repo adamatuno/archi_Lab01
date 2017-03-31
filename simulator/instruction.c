@@ -177,8 +177,8 @@ void Iti(unsigned int op, unsigned int s, unsigned int t, int C){
         mem_overflow(r[s] + C, 1);
         data_misaligned(r[s] + C, 0);
         if(mem_out(r[s] + C, 1)) break;
-        a = D[r[s] + C];
-        b = D[r[s] + C + 1];
+        a = D[r[s] + C] & 0x000000ff;
+        b = D[r[s] + C + 1] & 0x000000ff;
         r[t] = ((a << 8) | b) & 0x0000ffff;
         r[0] = 0;
         break;
@@ -204,7 +204,7 @@ void Iti(unsigned int op, unsigned int s, unsigned int t, int C){
         number_overflow(r[s], C, 1);
         mem_overflow(r[s] + C, 3);
         data_misaligned(r[s] + C, 1);
-        if(mem_out(r[s] + C, 1)) break;
+        if(mem_out(r[s] + C, 3)) break;
         D[r[s] + C] = (r[t] >> 24) & 0x000000ff;
         D[r[s] + C + 1] = (r[t] >> 16) & 0x000000ff;
         D[r[s] + C + 2] = (r[t] >> 8) & 0x000000ff;
@@ -220,8 +220,8 @@ void Iti(unsigned int op, unsigned int s, unsigned int t, int C){
         break;
     case 0x28://sb
         number_overflow(r[s], C, 0);
-        mem_overflow(r[s] + C, 1);
-        if(mem_out(r[s] + C, 1)) break;
+        mem_overflow(r[s] + C, 0);
+        if(mem_out(r[s] + C, 0)) break;
         D[r[s] + C] = r[t] & 0x000000ff;
         break;
     case 0x0f:///lui
@@ -244,7 +244,7 @@ void Iti(unsigned int op, unsigned int s, unsigned int t, int C){
     case 0x0e:///nori
         write_0(t);
         a = r[s];
-        r[t] = ~(a | C);
+        r[t] = ~(a | Cu);
         r[0] = 0;
         break;
     case 0x0a://slti
