@@ -27,3 +27,4 @@ void JSti(unsigned int op, unsigned C);
 void Iti(unsigned int op, unsigned int s, unsigned int t, int C);
 void cycle_0();
 void snap(int cycle);
+void PC_overflow();

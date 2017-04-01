@@ -1,4 +1,4 @@
-comp = fc
+comp = diff
 case1 = 15
 case2 = 2
 case3 = 4
